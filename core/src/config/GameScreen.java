@@ -8,11 +8,13 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import game.Cascadia;
+import game.CascadiaImg;
 
 public class GameScreen implements Screen{
 	private Game game;
 	private Viewport viewport;
 	private Cascadia cas;
+	private CascadiaImg casImg;
 	
 	private static final int MIN_WIDTH = 1280;
 	private static final int MIN_HEIGHT = 720;
@@ -37,8 +39,8 @@ public class GameScreen implements Screen{
 		
 		switch(currentState) {
 		case HOME:
-			this.cas = new Cascadia(viewport, game, this);
-            Gdx.input.setInputProcessor(cas.stage);
+			this.casImg = new CascadiaImg(viewport, game, this);
+            Gdx.input.setInputProcessor(casImg.stage);
             break;
 		}
 	}
@@ -56,7 +58,7 @@ public class GameScreen implements Screen{
 	    
 	    switch(currentState) {
 	    case HOME:
-	    	cas.render(delta);
+	    	casImg.render(delta);
 	    	break;	
 	    }	
 	}

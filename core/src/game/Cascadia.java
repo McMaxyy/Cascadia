@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import config.GameScreen;
@@ -35,7 +34,6 @@ public class Cascadia implements Screen {
     private int score;
     private Random rand = new Random();
     private float elX, elY, inc = 2f;
-    private Texture aTex, bTex, cTex, dTex;
 
     public Cascadia(Viewport viewport, Game game, GameScreen gameScreen) {
         this.gameScreen = gameScreen;
@@ -50,71 +48,8 @@ public class Cascadia implements Screen {
         elY = vp.getWorldHeight() / inc;
         score = 0;
 
-        loadTextures();
         createComponents();
-    }
-    
-    private void loadTextures() {
-        // Ensure assets are loaded
-        Storage.assetManager.finishLoading(); // Wait until all assets are loaded
-
-        // Check if the assets are loaded
-        if (Storage.assetManager.isLoaded("A.png")) {
-            aTex = Storage.assetManager.get("A.png", Texture.class);
-        } else {
-            Gdx.app.error("Cascadia", "Asset not loaded: A.png");
-        }
-        if (Storage.assetManager.isLoaded("B.png")) {
-            bTex = Storage.assetManager.get("B.png", Texture.class);
-        } else {
-            Gdx.app.error("Cascadia", "Asset not loaded: B.png");
-        }
-        if (Storage.assetManager.isLoaded("C.png")) {
-            cTex = Storage.assetManager.get("C.png", Texture.class);
-        } else {
-            Gdx.app.error("Cascadia", "Asset not loaded: C.png");
-        }
-        if (Storage.assetManager.isLoaded("D.png")) {
-            dTex = Storage.assetManager.get("D.png", Texture.class);
-        } else {
-            Gdx.app.error("Cascadia", "Asset not loaded: D.png");
-        }
-        
-        aTex.setFilter(Texture.TextureFilter.MipMap, Texture.TextureFilter.Nearest);
-        bTex.setFilter(Texture.TextureFilter.MipMap, Texture.TextureFilter.Nearest);
-        cTex.setFilter(Texture.TextureFilter.MipMap, Texture.TextureFilter.Nearest);
-        dTex.setFilter(Texture.TextureFilter.MipMap, Texture.TextureFilter.Nearest);
-    }
-
-    private Texture getRandomTexture() {
-        int randIndex = rand.nextInt(4);
-        switch (randIndex) {
-            case 0:
-                return aTex;
-            case 1:
-                return bTex;
-            case 2:
-                return cTex;
-            case 3:
-                return dTex;
-            default:
-                return null;
-        }
-    }
-    
-    private void startSpinningImage(final Image image) {
-        // Action to continuously change the image's texture for 2 seconds
-        image.addAction(Actions.repeat(20, Actions.sequence(
-            Actions.run(() -> image.setDrawable(new TextureRegionDrawable(getRandomTexture()))),
-            Actions.delay(0.05f) // Delay of 50 milliseconds
-        )));
-
-        // After 2 seconds, stop the spinning and set the final texture
-        image.addAction(Actions.sequence(
-            Actions.delay(0.1f), // Wait 2 seconds
-            Actions.run(() -> image.setDrawable(new TextureRegionDrawable(getRandomTexture()))) // Set final random texture
-        ));
-    }
+    }   
 
     private void createComponents() {
         spin = new TextButton("Spin", storage.buttonStyle);
